@@ -16,7 +16,7 @@ app.use(express.json({
 }))
 
 // this app.use(express.urlencoded()) will make the configuration in server for the url pattern to match , the special characters will replaced with the url pattern
-app.use(express.urlencoded({extended}))
+app.use(express.urlencoded({extended : true}))
 
 // this app.use(express.static()) will allow the server to perform CURD operations on the public folder
 app.use(express.static("public"))
