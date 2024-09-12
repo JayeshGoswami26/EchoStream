@@ -60,7 +60,7 @@ const userSchema = new Schema(
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
 
-    this.password = bcrypt.hash(this.password);
+    this.password = await bcrypt.hash(this.password, 10);
     next();
 });
 
@@ -68,8 +68,8 @@ userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.generateAccessToken = async function () {
-    jwt.sign(
+userSchema.methods.generateAccessToken =  function () {
+     return jwt.sign(
         {
             _id: this._id,
             email: this.email,
@@ -81,10 +81,11 @@ userSchema.methods.generateAccessToken = async function () {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
         }
     );
+    // console.log(`Generated access token: ${accessTokenTest}`)
 };
 
-userSchema.methods.generateAccessToken = async function () {
-    jwt.sign(
+userSchema.methods.generateRefreshToken =  function () {
+    return jwt.sign(
         {
             _id: this._id,
         },
