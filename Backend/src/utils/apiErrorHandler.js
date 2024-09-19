@@ -14,6 +14,8 @@ class ApiErrorHandler extends Error {
             Error.captureStackTrace(this, this.constructor)
         }
 
+        console.log( `Error :: ${this.message}` )
+
     }
 }
 
